@@ -1,6 +1,5 @@
 import random
-
-from matrices import genera_tablero, imprimir_tablero
+from tablero import genera_tablero, imprimir_tablero
 
 def comprueba_barco(tablero, fila, columna, orientacion, posiciones):
     for i in range(posiciones):
