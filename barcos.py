@@ -33,11 +33,3 @@ def coloca_barcos(tablero, barcos):
             coordenadas_de_barcos += coloca_barco(tablero, fila, columna, orientacion, posiciones)
     return coordenadas_de_barcos
 
-def algun_hundido(coordenadas_de_barcos):
-    for coordenadas in coordenadas_de_barcos:
-        if len(coordenadas) == 0:
-            return True
-    return False
-
-def elegir_coordenada():
-    print()
