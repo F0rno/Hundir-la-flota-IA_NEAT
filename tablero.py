@@ -30,5 +30,6 @@ if __name__ == "__main__":
             fila.append(" ")
         tablero.append(fila)
 
-
+    tablero[9][9] = "x"
+    print(tablero[9][9])
     imprimir_tablero(tablero)
