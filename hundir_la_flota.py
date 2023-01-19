@@ -1,5 +1,8 @@
 from tablero import genera_tablero, imprimir_tablero
-from barcos import coloca_barcos
+from barcos  import coloca_barcos
+from os      import system
+from sys     import platform
+from time    import sleep
 import random
 
 def algun_hundido(fila, columna, coordenadas_de_barcos):
@@ -22,6 +25,16 @@ def dispara(fila, columna, tablero_enemigo, coordenadas_de_barcos_jugador):
         if algun_hundido(fila, columna,coordenadas_de_barcos_jugador):
             return "H"
         return "T"
+
+def imprimir_tableros(tableroEnemigo, tableroJugador):
+    if platform == "win32":
+        system("cls")
+    elif platform == "linux2":
+        system("clear")
+
+    imprimir_tablero(tableroEnemigo)
+    print()
+    imprimir_tablero(tableroJugador)
 
 if __name__ == "__main__":
     barcos = ((1, 4), (2, 3), (3, 2), (4, 1))
@@ -81,7 +94,20 @@ if __name__ == "__main__":
                 print("Hundido!")
 
         # Combrobar si hay ganador, 10 gana
-        
+        if contador_de_hundidos_juagor1 == 10:
+            print("Gana el jugador 1")
+            break
+
+        if contador_de_hundidos_juagor2 == 10:
+            print("Gana el jugador 2")
+            break
+
+        # Impresión de los tableros
+        if turno == 1:
+            imprimir_tableros(jugador1_TableroEnemigo, jugador1_Tablero)
+
+        if turno == 2:
+            imprimir_tableros(jugador1_TableroEnemigo, jugador1_Tablero)
 
         # Cambio de turno
         if turno == 1:
@@ -89,8 +115,6 @@ if __name__ == "__main__":
         
         if turno == 2:
             turno = 1
-
-        break
-
-    #imprimir_tablero(jugador1_Tablero)
-    #imprimir_tablero(jugador2_Tablero)
+        
+        # Velocidad del juego
+        sleep(0.5)
