@@ -21,7 +21,7 @@ def coloca_barco(tablero, fila, columna, orientacion, posiciones):
     return tuple(coordenadas)
 
 def coloca_barcos(tablero, barcos):
-    coordenadas_de_barcos = ()
+    coordenadas_de_barcos = []
     for numero_barcos, posiciones in barcos:
         for _ in range(numero_barcos):
             while True:
