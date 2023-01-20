@@ -27,15 +27,17 @@ def dispara(fila, columna, tablero_enemigo, coordenadas_de_barcos_jugador):
         return "T"
 
 def es_ganador(tablero_enemigo):
+    # Este bucle anidado recorre el tableo buscando
+    # barcos "T" y si cuenta el maximo dice que ha gando
     win_counter = 0
     for letra in tablero_enemigo:
         for numero in letra:
             if numero == "T":
-                win_counter =+ 1
+                win_counter += 1
     
-    if win_counter == 19:
+    if win_counter == 20:
         return True
-    if win_counter < 19:
+    if win_counter < 20:
         return False
 
 def imprimir_tableros(tableroEnemigo, tableroJugador, turno):
@@ -45,6 +47,7 @@ def imprimir_tableros(tableroEnemigo, tableroJugador, turno):
         system("clear")
 
     print(f"--- Jugador {turno}")
+    print()
     imprimir_tablero(tableroEnemigo)
     print()
     imprimir_tablero(tableroJugador)
@@ -131,4 +134,3 @@ if __name__ == "__main__":
             turno = 1
                 
         # Velocidad del juego
-        sleep(0.5)
