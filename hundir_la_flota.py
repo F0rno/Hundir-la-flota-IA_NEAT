@@ -13,9 +13,13 @@ def algun_hundido(fila, columna, coordenadas_de_barcos):
             coordenadas.remove((fila, columna))
     return False
 
-def elegir_coordenada():
-    fila = random.randint(0,9)
-    columna = random.randint(0,9)
+def elegir_coordenada(coordenadas_usadas):
+    while (True):
+        fila    = random.randint(0,9)
+        columna = random.randint(0,9)
+        if (fila, columna) not in coordenadas_usadas:
+            coordenadas_usadas.append((fila, columna))
+            break
     return fila, columna
 
 def dispara(fila, columna, tablero_enemigo, coordenadas_de_barcos_jugador):
@@ -34,7 +38,6 @@ def es_ganador(tablero_enemigo):
         for numero in letra:
             if numero == "T":
                 win_counter += 1
-    
     if win_counter == 20:
         return True
     if win_counter < 20:
@@ -45,7 +48,6 @@ def imprimir_tableros(tableroEnemigo, tableroJugador, turno):
         system("cls")
     elif platform == "linux2":
         system("clear")
-
     print(f"--- Jugador {turno}")
     print()
     imprimir_tablero(tableroEnemigo)
@@ -69,12 +71,15 @@ if __name__ == "__main__":
 
     # Variables de juego
     turno = 1
-    contador_de_hundidos_juagor1 = 0
-    contador_de_hundidos_juagor2 = 0
+    coordenadas_usadas_jugador1 = []
+    coordenadas_usadas_jugador2 = []
 
     while (True):
         # Elegir una coordenada para disparar
-        fila, columna = elegir_coordenada()
+        if turno == 1:
+            fila, columna = elegir_coordenada(coordenadas_usadas_jugador1)
+        if turno == 2:
+            fila, columna = elegir_coordenada(coordenadas_usadas_jugador2)
         
         # Dispara y retorna (Tocado, Hundido y Agua)
         if turno == 1:
@@ -101,12 +106,10 @@ if __name__ == "__main__":
         if resultado_del_disparo == "H":
             if turno == 1:
                 jugador1_TableroEnemigo[fila][columna] = "T"
-                contador_de_hundidos_juagor1 += 1
                 print("Hundido!")
 
             if turno == 2:
                 jugador2_TableroEnemigo[fila][columna] = "T"
-                contador_de_hundidos_juagor2 += 1
                 print("Hundido!")
 
         # Combrobar si hay ganador, 20 gana
@@ -134,3 +137,4 @@ if __name__ == "__main__":
             turno = 1
                 
         # Velocidad del juego
+
