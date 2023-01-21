@@ -40,8 +40,7 @@ def es_ganador(tablero_enemigo):
                 win_counter += 1
     if win_counter == 20:
         return True
-    if win_counter < 20:
-        return False
+    return False
 
 def imprimir_tableros(tableroEnemigo, tableroJugador, turno):
     if platform == "win32":
@@ -112,6 +111,13 @@ if __name__ == "__main__":
                 jugador2_TableroEnemigo[fila][columna] = "T"
                 print("Hundido!")
 
+        # Impresión de los tableros
+        if turno == 1:
+            imprimir_tableros(jugador1_TableroEnemigo, jugador1_Tablero, turno)
+
+        if turno == 2:
+            imprimir_tableros(jugador2_TableroEnemigo, jugador2_Tablero, turno)
+
         # Combrobar si hay ganador, 20 gana
         if turno == 1:
             if es_ganador(jugador1_TableroEnemigo):
@@ -123,13 +129,6 @@ if __name__ == "__main__":
                 print("Gana el jugador 2")
                 break
 
-        # Impresión de los tableros
-        if turno == 1:
-            imprimir_tableros(jugador1_TableroEnemigo, jugador1_Tablero, turno)
-
-        if turno == 2:
-            imprimir_tableros(jugador2_TableroEnemigo, jugador2_Tablero, turno)
-
         # Cambio de turno
         if turno == 1:
             turno = 2
@@ -137,4 +136,4 @@ if __name__ == "__main__":
             turno = 1
                 
         # Velocidad del juego
-
+        #sleep(0.1)
