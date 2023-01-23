@@ -7,10 +7,10 @@ import random
 
 def algun_hundido(fila, columna, coordenadas_de_barcos):
     for coordenadas in coordenadas_de_barcos:
-        if len(coordenadas) == 0:
-            return True
         if (fila, columna) in coordenadas:
             coordenadas.remove((fila, columna))
+        if len(coordenadas) == 0:
+            return True
     return False
 
 def elegir_coordenada(coordenadas_usadas):
