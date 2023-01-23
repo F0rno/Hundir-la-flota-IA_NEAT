@@ -34,9 +34,9 @@ def es_ganador(tablero_enemigo):
     # Este bucle anidado recorre el tableo buscando
     # barcos "T" y si cuenta el maximo dice que ha gando
     win_counter = 0
-    for letra in tablero_enemigo:
-        for numero in letra:
-            if numero == "T":
+    for numero in tablero_enemigo:
+        for letra in numero:
+            if letra == "T":
                 win_counter += 1
     if win_counter == 20:
         return True
