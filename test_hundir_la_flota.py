@@ -1,14 +1,5 @@
 from hundir_la_flota   import *
 
-jugador1_Tablero        = genera_tablero()
-jugador1_TableroEnemigo = genera_tablero()
-
-jugador2_Tablero        = genera_tablero()
-jugador2_TableroEnemigo = genera_tablero()
-
-imprimir_tableros(jugador1_Tablero, jugador1_TableroEnemigo, 1)
-# Inicializamos los barcos
-
 coordenadas_de_barcos_jugador1 = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
                                   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
                                   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
