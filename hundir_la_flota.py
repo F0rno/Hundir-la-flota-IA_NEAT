@@ -136,4 +136,4 @@ if __name__ == "__main__":
             turno = 1
                 
         # Velocidad del juego
-        #sleep(0.1)
+        sleep(0.1)
