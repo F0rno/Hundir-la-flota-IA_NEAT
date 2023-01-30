@@ -1,5 +1,8 @@
-from lanzar_ip import *
+from lanzar_escucha_ip import *
 
 def test_laun():
 
-    assert laun() == (True, str) or laun() == (False, str)
+    assert lanzarIP() == (True, str) or lanzarIP() == (False, str)
+
+def test_escuchar():
+    assert escuchar() == (True, str) or escuchar() == (False, str)
