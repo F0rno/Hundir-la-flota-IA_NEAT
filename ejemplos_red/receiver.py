@@ -4,8 +4,8 @@ Sacado de https://rico-schmidt.name/pymotw-3/socket/multicast.html
 import socket
 import struct
 
-multicast_group = '224.3.29.71'
-server_address = ('', 10000)
+multicast_group = '224.6.6.6'
+server_address = ('', 6969)
 
 # Creamos el socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
