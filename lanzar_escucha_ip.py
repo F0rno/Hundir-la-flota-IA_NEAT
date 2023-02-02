@@ -18,24 +18,26 @@ def escucha():
     group = socket.inet_aton(multicast_group)
     mreq = struct.pack('4sL', group, socket.INADDR_ANY)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
-
-    # Recive y envia
-    logging.debug("Escuchando")
+    sock.settimeout(3)
+    # Recibe y envia
+    logging.debug('Recibe y envia')
     while True:
         try:
             data, address = sock.recvfrom(1024)
-            logging.debug("Datos recibidos", data.decode('utf-8'))
+            logging.debug('Recibido')
+            logging.debug('Recibe {} bytes de {}'.format(
+                len(data), address))
+            logging.debug(data)
             sock.sendto(b'OK', address)
-            logging.debug("Enviando ok")
             sock.close()
-            return True, data.decode('utf-8')
+            return True, data.decode("utf-8")
         except socket.timeout:
-            logging.debug("Socket timeout")
+            logging.debug("Timeout")
+            sock.close()
             return False, str
 
 
 def lanzarIP():
-
     myIP = socket.gethostbyname(socket.gethostname())
     message = bytes(myIP, encoding="utf-8")
     multicast_group = ('224.6.6.6', 6969)
@@ -45,7 +47,7 @@ def lanzarIP():
 
     # Ponemos un tiempo maximo para recivir la info
     # y asi no bloquear el socket
-    sock.settimeout(2)
+    sock.settimeout(1)
 
     # El time-to-live del paquete sera de 1
     # para que no pase la difusion de red local
@@ -54,23 +56,28 @@ def lanzarIP():
 
     try:
         # Envia los datos atraves del grupo de difusion
-        logging.debug("Enviando datos")
+        logging.debug("Enviando ip")
         sent = sock.sendto(message, multicast_group)
 
         # Esperamos respuesta
         logging.debug("Esperando respuesta")
         while True:
             try:
-                data, server = sock.recvfrom(16)
-                return True, data.decode('utf-8')
+                data, server = sock.recvfrom(1024)
                 logging.debug("Respuesta recibida")
             except socket.timeout:
-                logging.debug("Socket timeout")
+                logging.debug('No hay respuesta')
                 break
+            else:
+                logging.debug('recibido {!r} de {}'.format(
+                    data, server))
+                return True, data.decode("utf-8")
+
     finally:
-        logging.debug("Cerrando socket")
+        logging.debug('Cerrando socket')
         sock.close()
     return False, str
 
+
 if __name__ == "__main__":
-    print(lanzarIP())
+    lanzarIP()

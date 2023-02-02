@@ -5,7 +5,7 @@ import socket
 import struct
 
 message = b'Quien unos barquitos?'
-multicast_group = ('224.6.6.6', 10000)
+multicast_group = ('224.6.6.6', 6969)
 
 # Creamos el socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
