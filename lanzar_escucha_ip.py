@@ -23,7 +23,7 @@ def escucha():
     logging.debug('Recibe y envia')
     while True:
         try:
-            data, address = sock.recvfrom(1024)
+            data, address = sock.recvfrom(16)
             logging.debug('Recibido')
             logging.debug('Recibe {} bytes de {}'.format(
                 len(data), address))
@@ -63,7 +63,7 @@ def lanzarIP():
         logging.debug("Esperando respuesta")
         while True:
             try:
-                data, server = sock.recvfrom(1024)
+                data, server = sock.recvfrom(16)
                 logging.debug("Respuesta recibida")
             except socket.timeout:
                 logging.debug('No hay respuesta')
