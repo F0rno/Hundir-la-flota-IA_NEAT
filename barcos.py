@@ -7,7 +7,7 @@ def comprueba_barco(tablero, fila, columna, orientacion, posiciones):
             return False
         if fila+i*orientacion >= len(tablero):
             return False
-        if tablero[fila+i*orientacion][columna+i*(orientacion==0)] != " ":
+        if tablero[fila+i*orientacion][columna+i*(orientacion==0)] != "0":
             return False
     return True
 
