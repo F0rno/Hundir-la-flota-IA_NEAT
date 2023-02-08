@@ -31,7 +31,7 @@ def imprimir_tablero_IA(tablero):
             print(" ", end="")
         for celda in fila:
             if celda == "0":
-                print(" ", end=" ")
+                print("~", end=" ")
             elif celda == "1":
                 print(" ", end=" ")
             else:

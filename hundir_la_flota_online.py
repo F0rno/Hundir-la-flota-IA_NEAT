@@ -1,4 +1,5 @@
 from lanzar_escucha_ip import *
+from protocolo import *
 from time import sleep
 
 ipLanzada = lanzarIP()

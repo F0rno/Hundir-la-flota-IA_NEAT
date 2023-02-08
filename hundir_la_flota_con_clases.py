@@ -34,7 +34,7 @@ class Almirante:
                     self.archivo_de_IA = pickle.load(f)
                     self.red_neuronal_de_disparo = neat.nn.FeedForwardNetwork.create(self.archivo_de_IA, self.config)
             except:
-                Exception("No se pudo importar el disparo IA")      
+                raise NameError("No se pudo importar el disparo IA")      
 
     def algun_hundido(self, fila, columna, coordenadas_de_barcos):
         for coordenadas in coordenadas_de_barcos:
@@ -142,9 +142,6 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
             if turno == 1:
                 yo.imprimir_tableros()
 
-            if turno == 2:
-                enemigo.imprimir_tableros()
-
         # Combrobar si hay ganador, 20 gana
         if turno == 1:
             if yo.soy_ganador():
@@ -156,9 +153,6 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
 
         if turno == 2:
             if enemigo.soy_ganador():
-                if display:
-                    enemigo.imprimir_tableros()
-                    print(f"Gana {enemigo.nombre}")
                 ganadas_RA.append("1")
                 break
 
@@ -172,12 +166,12 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
         #sleep(0.1)
 
 if __name__ == "__main__":
-    
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 5
+    n_juegos = 100
+    display  = False
     for _ in range(0, n_juegos):
-        jugar(ganadas_RA, ganadas_IA)
+        jugar(ganadas_RA, ganadas_IA, display)
     print(f"Ganadas IA        : {len(ganadas_IA)}")
     print(f"Ganadas Aleatorio : {len(ganadas_RA)}")
     print()
