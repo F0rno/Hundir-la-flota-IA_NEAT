@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.DEBUG)
 def conectar(ip):
     logging.debug("Crear un socket TCP, para connectarse")
     socket_con_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket_con_server.settimeout(2)
+    #socket_con_server.settimeout()
     server_address = (ip, 6969)
     logging.debug("Intentando conectarse")
     try:
@@ -15,5 +15,6 @@ def conectar(ip):
     except Exception as err:
         conexion = False
         logging.debug(err)
+        socket_con_server.close()
     return conexion, socket_con_server
 

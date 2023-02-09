@@ -1,6 +1,7 @@
 import socket
 import struct
 import logging
+from time import sleep
 logging.basicConfig(level=logging.DEBUG)
 
 def escucha():
@@ -47,7 +48,7 @@ def lanzarIP():
 
     # Ponemos un tiempo maximo para recivir la info
     # y asi no bloquear el socket
-    sock.settimeout(1)
+    sock.settimeout(0.5)
 
     # El time-to-live del paquete sera de 1
     # para que no pase la difusion de red local
