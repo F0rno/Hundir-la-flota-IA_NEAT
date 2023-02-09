@@ -32,7 +32,6 @@ def main():
                     jugarComoServer(socket_server)
                 else:
                     logging.debug("No se a conectado ningun cliente")
-
         else:
             # Bolean, Socket
             escuchado = escucha()

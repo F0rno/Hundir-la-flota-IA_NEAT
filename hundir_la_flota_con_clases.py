@@ -7,7 +7,6 @@ import neat
 import pickle
 import numpy as np
 import random
-from hundir_la_flota import *
 
 
 class Almirante:
@@ -53,7 +52,7 @@ class Almirante:
         if self.tablero_aliado[fila][columna] == "0":
             return "A"
         if self.tablero_aliado[fila][columna] != "0":
-            if algun_hundido(fila, columna, self.coordenadas_de_barcos_aliados):
+            if self.algun_hundido(fila, columna, self.coordenadas_de_barcos_aliados):
                 return "H"
             return "T"
 
