@@ -6,7 +6,6 @@ def coordenada_con_letra(fila, columna):
 
 fila, columna = coordenada_con_letra(9,7)
 
-hola = 
 hola = hola.decode("utf-8")
 print(hola[0])
 
