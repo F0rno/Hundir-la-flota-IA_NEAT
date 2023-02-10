@@ -1,8 +1,8 @@
-from tablero import genera_tablero, imprimir_tablero, imprimir_tablero_IA
-from barcos  import coloca_barcos
-from os      import system
-from sys     import platform
-from os import path, getcwd
+from tablero    import genera_tablero, imprimir_tablero, imprimir_tablero_IA
+from barcos     import coloca_barcos
+from os         import system
+from sys        import platform
+from os         import path, getcwd
 import neat
 import pickle
 import numpy as np

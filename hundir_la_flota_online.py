@@ -1,12 +1,24 @@
+from hundir_la_flota_con_clases import *
 from lanzar_escucha_ip import *
 from protocolo import *
 from time import sleep
 logging.basicConfig(level=logging.DEBUG)
 
+def coordenada_con_letra(fila, columna):
+    diccionario_de_letras = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J'}
+    return diccionario_de_letras[fila], columna
+
 def jugarComoServer(server_socket: socket):
-    message = b'Se acabaron los barquitos'
-    server_socket.sendall(message)
-    server_socket.close()
+    barco_local  = Almirante()
+    barco_online = Almirante("Tomas Coronado")
+
+    while (True):
+        fila, columna = barco_local.elegir_coordenada_IA()
+        fila, columna = coordenada_con_letra(fila, columna)
+        coordenadas_de_disparo = bytes(f"{fila}{columna}", encoding='utf-8')
+        server_socket.sendall(coordenadas_de_disparo)
+        server_socket.close()
+        break
 
 def jugarComoCliente(server_cliente: socket):
     data = server_cliente.recv(1024)
