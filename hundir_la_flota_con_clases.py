@@ -1,7 +1,7 @@
-from tablero    import genera_tablero, imprimir_tablero, imprimir_tablero_IA
-from barcos     import coloca_barcos
+from hundir_la_flota.tablero    import genera_tablero, imprimir_tablero, imprimir_tablero_IA
+from hundir_la_flota.barcos     import coloca_barcos
 from os         import system
-from sys        import platform
+from sys        import platform, path
 from os         import path, getcwd
 import neat
 import pickle
@@ -115,37 +115,51 @@ class Almirante:
 
 
 def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
-    yo = Almirante("F")
-    enemigo = Almirante("Manco")
+    yo = Almirante("IA")
+    enemigo = Almirante("Ramdon")
+    # Variable de juego
+    turno = 1
 
     while (True):
-        # Elegir una coordenada para disparar  
-        fila, columna = yo.elegir_coordenada_IA()
-        resultado_del_disparo = enemigo.recibir_disparo(fila, columna)
+        # Elegir una coordenada para disparar
+        if turno == 1:
+            fila, columna = yo.elegir_coordenada_IA()
+            resultado_del_disparo = enemigo.recibir_disparo(fila, columna)
 
-        fila, columna = enemigo.elegir_coordenada_aleatoria()
-        resultado_del_disparo = yo.recibir_disparo(fila, columna)
+        if turno == 2:
+            fila, columna = enemigo.elegir_coordenada_aleatoria()
+            resultado_del_disparo = yo.recibir_disparo(fila, columna)
     
         # Actualizar mapa con (Tocado, Hundido y Agua)
-        yo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
-        enemigo.actualizar_tras_disparo(resultado_del_disparo, fila, columna) 
+        if turno == 1:
+            yo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
+        if turno == 2:
+            enemigo.actualizar_tras_disparo(resultado_del_disparo, fila, columna) 
 
         if display:
             # Impresión de los tableros
             yo.imprimir_tableros()      
 
         # Combrobar si hay ganador, 20 gana
-        if yo.soy_ganador():
-            if display:
-                yo.imprimir_tableros()
-                print(f"Gana {yo.nombre}")
-            ganadas_IA.append("1")
-            break
+        if turno == 1:
+            if yo.soy_ganador():
+                if display:
+                    yo.imprimir_tableros()
+                    print(f"Gana {yo.nombre}")
+                ganadas_IA.append("1")
+                break
 
-        if enemigo.soy_ganador():
-            ganadas_RA.append("1")
-            break
-                
+        if turno == 2:
+            if enemigo.soy_ganador():
+                ganadas_RA.append("1")
+                break
+
+        # Cambio de turno    
+        if turno == 1:
+            turno = 2
+        elif turno == 2:
+            turno = 1
+
         # Velocidad del juego
         # sleep(0.1)
 

@@ -1,7 +1,6 @@
 import socket
 import struct
 import logging
-from time import sleep
 logging.basicConfig(level=logging.DEBUG)
 
 def escucha():

@@ -1,5 +1,4 @@
 import socket
-import struct
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -43,17 +42,3 @@ def levantar_server(ip):
         server_socket.close()
         return conexion, socket 
        
-
-"""
-    Recibir datos del cliente
-    data = client_socket.recv(1024)
-
-    Enviar una respuesta al cliente
-    response = b'Mensaje recibido: ' + data
-    client_socket.sendall(response)
-
-    Cerrar la conexión con el cliente
-    client_socket.close()
-    break
-
-"""

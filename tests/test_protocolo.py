@@ -1,4 +1,4 @@
-from protocolo import *
+from net.protocolo import *
 import socket
 
 def test_connectar():

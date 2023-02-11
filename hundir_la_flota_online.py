@@ -1,6 +1,6 @@
-from hundir_la_flota.hundir_la_flota_con_clases import *
-from lanzar_escucha_ip import *
-from protocolo import *
+from hundir_la_flota_con_clases import Almirante
+from net.lanzar_escucha_ip import *
+from net.protocolo import *
 from time import sleep
 logging.basicConfig(level=logging.DEBUG)
 

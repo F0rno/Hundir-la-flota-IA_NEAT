@@ -1,4 +1,4 @@
-from lanzar_escucha_ip import *
+from net.lanzar_escucha_ip import *
 
 """
 def test_laun():
