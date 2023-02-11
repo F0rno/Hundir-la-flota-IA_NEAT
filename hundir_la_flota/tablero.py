@@ -1,5 +1,3 @@
-import random
-
 def imprimir_tablero(tablero):
     columnas = " ABCDEFGHIJ"
     print(" ", end="")

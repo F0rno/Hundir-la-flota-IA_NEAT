@@ -26,10 +26,10 @@ class Almirante:
 
     def inicializar_la_red(self):
         if not self.entrenamiento:
-            self.config_path = path.join(getcwd(), 'config-feedforward.txt')
+            self.config_path = path.join(getcwd(), 'hundir_la_flota/config-feedforward.txt')
             self.config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, self.config_path)
             try:
-                with open("red_mamadisima.pkl", "rb") as f:
+                with open("hundir_la_flota/red_mamadisima.pkl", "rb") as f:
                     self.archivo_de_IA = pickle.load(f)
                     self.red_neuronal_de_disparo = neat.nn.FeedForwardNetwork.create(self.archivo_de_IA, self.config)
             except:
@@ -71,6 +71,8 @@ class Almirante:
         if platform == "win32":
             system("cls")
         elif platform == "linux2":
+            system("clear")
+        else:
             system("clear")
         print(f"--- {self.nombre}")
         print()
@@ -116,58 +118,41 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
     yo = Almirante("F")
     enemigo = Almirante("Manco")
 
-    # Variable de juego
-    turno = 1
-
     while (True):
-        # Elegir una coordenada para disparar
-        if turno == 1:
-            fila, columna = yo.elegir_coordenada_IA()
-            resultado_del_disparo = enemigo.recibir_disparo(fila, columna)
+        # Elegir una coordenada para disparar  
+        fila, columna = yo.elegir_coordenada_IA()
+        resultado_del_disparo = enemigo.recibir_disparo(fila, columna)
 
-        if turno == 2:
-            fila, columna = enemigo.elegir_coordenada_aleatoria()
-            resultado_del_disparo = yo.recibir_disparo(fila, columna)
-        
+        fila, columna = enemigo.elegir_coordenada_aleatoria()
+        resultado_del_disparo = yo.recibir_disparo(fila, columna)
+    
         # Actualizar mapa con (Tocado, Hundido y Agua)
-        if turno == 1:
-            yo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
-
-        if turno == 2:
-            enemigo.actualizar_tras_disparo(resultado_del_disparo, fila, columna) 
+        yo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
+        enemigo.actualizar_tras_disparo(resultado_del_disparo, fila, columna) 
 
         if display:
             # Impresión de los tableros
-            if turno == 1:
-                yo.imprimir_tableros()
+            yo.imprimir_tableros()      
 
         # Combrobar si hay ganador, 20 gana
-        if turno == 1:
-            if yo.soy_ganador():
-                if display:
-                    yo.imprimir_tableros()
-                    print(f"Gana {yo.nombre}")
-                ganadas_IA.append("1")
-                break
+        if yo.soy_ganador():
+            if display:
+                yo.imprimir_tableros()
+                print(f"Gana {yo.nombre}")
+            ganadas_IA.append("1")
+            break
 
-        if turno == 2:
-            if enemigo.soy_ganador():
-                ganadas_RA.append("1")
-                break
-
-        # Cambio de turno
-        if turno == 1:
-            turno = 2
-        elif turno == 2:
-            turno = 1
+        if enemigo.soy_ganador():
+            ganadas_RA.append("1")
+            break
                 
         # Velocidad del juego
-        #sleep(0.1)
+        # sleep(0.1)
 
 if __name__ == "__main__":
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 100
+    n_juegos = 1000
     display  = False
     for _ in range(0, n_juegos):
         jugar(ganadas_RA, ganadas_IA, display)

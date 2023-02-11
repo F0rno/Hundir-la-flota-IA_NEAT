@@ -1,4 +1,4 @@
-from hundir_la_flota_con_clases import *
+from hundir_la_flota.hundir_la_flota_con_clases import *
 from lanzar_escucha_ip import *
 from protocolo import *
 from time import sleep

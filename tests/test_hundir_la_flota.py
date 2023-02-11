@@ -1,4 +1,4 @@
-from hundir_la_flota   import *
+from hundir_la_flota.hundir_la_flota   import *
 
 coordenadas_de_barcos_jugador1 = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
                                   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
