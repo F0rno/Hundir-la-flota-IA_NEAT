@@ -68,13 +68,14 @@ class Almirante:
             #print("Hundido!")
 
     def imprimir_tableros(self):
+        """
         if platform == "win32":
             system("cls")
         elif platform == "linux2":
             system("clear")
         else:
             system("clear")
-        
+        """
         print(f"--- {self.nombre}")
         print()
         imprimir_tablero_IA(self.tablero_enemigo)
