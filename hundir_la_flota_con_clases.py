@@ -52,8 +52,8 @@ class Almirante:
         if self.tablero_aliado[fila][columna] == "0":
             return "A"
         if self.tablero_aliado[fila][columna] != "0":
-            if self.algun_hundido(fila, columna, self.coordenadas_de_barcos_aliados):
-                return "H"
+            #if self.algun_hundido(fila, columna, self.coordenadas_de_barcos_aliados):
+                #return "T"
             return "T"
 
     def actualizar_tras_disparo(self, resultado_del_disparo, fila, columna):
@@ -74,6 +74,7 @@ class Almirante:
             system("clear")
         else:
             system("clear")
+        
         print(f"--- {self.nombre}")
         print()
         imprimir_tablero_IA(self.tablero_enemigo)
