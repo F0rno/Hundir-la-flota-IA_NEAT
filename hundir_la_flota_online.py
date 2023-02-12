@@ -51,6 +51,7 @@ def jugarComoServer(server_socket: socket):
         if respuesta_del_enemigo == "WIN":
             ganamos = False
             break
+        # Actualizamos el tablero y imprimimos
         barco_local.actualizar_tras_disparo(respuesta_del_enemigo, fila, columna)
         barco_local.imprimir_tableros()
 
@@ -68,6 +69,7 @@ def jugarComoServer(server_socket: socket):
             respuesta_del_enemigo = bytes(server_socket.recv(16)).decode("utf-8")
             barco_local.actualizar_tras_disparo(respuesta_del_enemigo, fila, columna)
 
+        # Si detectamos que ganamos terminamos el bucle del juego aqui
         if end:
             break
         # Recibimos el disparo enemigo y comprobamos si nos a ganado
@@ -92,6 +94,7 @@ def jugarComoServer(server_socket: socket):
             respuesta_aliada = barco_local.recibir_disparo(fila, columna)
             server_socket.sendall(bytes(respuesta_aliada, encoding="utf-8"))
         
+        # Terminamos si nos han ganado esperando su disparo
         if end:
             break
         sleep(0.1)
@@ -129,8 +132,10 @@ def jugarComoCliente(cliente_socket: socket):
         if comprobar_si_ganamos_y_avisamos(cliente_socket, barco_local):
             ganamos = True
             break
+        # Al recivir disparo damos el resultado y se actualiza el tablero
         fila, columna = bytes_a_coordenadas(disparo_enemigo)
         respuesta_aliada = barco_local.recibir_disparo(fila, columna)
+        # Enviamos el resultado
         cliente_socket.sendall(bytes(respuesta_aliada, encoding="utf-8"))
         barco_local.imprimir_tableros()
 
@@ -145,6 +150,7 @@ def jugarComoCliente(cliente_socket: socket):
             respuesta_aliada = barco_local.recibir_disparo(fila, columna)
             cliente_socket.sendall(bytes(respuesta_aliada, encoding="utf-8"))
 
+        # Terminamos si nos han ganado esperando su disparo
         if end:
             break
         # Disparamos porque el servidor fallo
@@ -153,6 +159,7 @@ def jugarComoCliente(cliente_socket: socket):
         cliente_socket.sendall(coordenadas_a_bytes(filaLetra, columnaInt))
         # Esperamos respuesta
         respuesta_del_enemigo = bytes(cliente_socket.recv(16)).decode("utf-8")
+        # Comprobamos si hemos perdido
         if respuesta_del_enemigo == "WIN":
             ganamos = False
             break
