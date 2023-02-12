@@ -68,14 +68,12 @@ class Almirante:
             #print("Hundido!")
 
     def imprimir_tableros(self):
-          
         if platform == "win32":
             system("cls")
         elif platform == "linux2":
             system("clear")
         else:
             system("clear")
-        
         print(f"--- {self.nombre}")
         print()
         imprimir_tablero_IA(self.tablero_enemigo)
@@ -168,7 +166,7 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
 if __name__ == "__main__":
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 1000
+    n_juegos = 10
     display  = False
     for _ in range(0, n_juegos):
         jugar(ganadas_RA, ganadas_IA, display)

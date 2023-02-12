@@ -52,9 +52,6 @@ def jugarComoServer(server_socket: socket):
             ganamos = False
             break
         barco_local.actualizar_tras_disparo(respuesta_del_enemigo, fila, columna)
-        if comprobar_si_ganamos_y_avisamos(server_socket, barco_local):
-            ganamos = True
-            break
         barco_local.imprimir_tableros()
 
         # Mientras que acertemos seguimos disparando
@@ -164,6 +161,10 @@ def jugarComoCliente(cliente_socket: socket):
 
         # Mientras que acertemos seguimos disparando
         while (respuesta_del_enemigo == "T" or respuesta_del_enemigo == "H"):
+            if comprobar_si_ganamos_y_avisamos(cliente_socket, barco_local):
+                ganamos = True
+                end = True
+                break
             # Disparamos de nuevo
             fila, columna = barco_local.elegir_coordenada_IA()
             filaLetra, columnaInt = coordenada_con_letra(fila, columna)
