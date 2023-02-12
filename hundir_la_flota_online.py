@@ -208,9 +208,10 @@ def jugarComoCliente(cliente_socket: socket):
 
 def main():
     IP = socket.gethostbyname(socket.gethostname())
-    maximo_de_intentos = 5
+    maximo_de_intentos = 1
+    numero_de_intentos = 1
 
-    while (maximo_de_intentos <= 5):
+    while (numero_de_intentos <= maximo_de_intentos):
         print("Lanzando IP")
         # Bolean, Str
         ipLanzada = lanzarIP()
@@ -238,8 +239,7 @@ def main():
                     jugarComoCliente(socket_server)
                 else:
                     print("No es posible conectarse")
-        maximo_de_intentos += 1
-        break
+        numero_de_intentos += 1
 
 
 if __name__ == "__main__":

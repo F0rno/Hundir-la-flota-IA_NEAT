@@ -167,7 +167,7 @@ if __name__ == "__main__":
     ganadas_RA = []
     ganadas_IA = []
     n_juegos = 10
-    display  = False
+    display  = True
     for _ in range(0, n_juegos):
         jugar(ganadas_RA, ganadas_IA, display)
     print(f"Ganadas IA        : {len(ganadas_IA)}")
