@@ -32,8 +32,9 @@ def comprobar_si_ganamos_y_avisamos(socket: socket, barco_local: Almirante):
         
 
 def jugarComoServer(server_socket: socket):
-    barco_local  = Almirante()
+    barco_local  = Almirante("Servidor")
     ganamos = False
+    end = False
 
     while (True):
         # Comprobamos si hemos ganado
@@ -54,12 +55,13 @@ def jugarComoServer(server_socket: socket):
         if comprobar_si_ganamos_y_avisamos(server_socket, barco_local):
             ganamos = True
             break
-        #barco_local.imprimir_tableros()
+        barco_local.imprimir_tableros()
 
         # Mientras que acertemos seguimos disparando
         while (respuesta_del_enemigo == "T" or respuesta_del_enemigo == "H"):
             if comprobar_si_ganamos_y_avisamos(server_socket, barco_local):
                 ganamos = True
+                end = True
                 break
             # Disparamos de nuevo
             fila, columna = barco_local.elegir_coordenada_IA()
@@ -69,6 +71,8 @@ def jugarComoServer(server_socket: socket):
             respuesta_del_enemigo = bytes(server_socket.recv(16)).decode("utf-8")
             barco_local.actualizar_tras_disparo(respuesta_del_enemigo, fila, columna)
 
+        if end:
+            break
         # Recibimos el disparo enemigo y comprobamos si nos a ganado
         disparo_enemigo = server_socket.recv(16)
         if bytes(disparo_enemigo).decode("utf-8") == "WIN":
@@ -85,12 +89,19 @@ def jugarComoServer(server_socket: socket):
             disparo_enemigo = server_socket.recv(16)
             if bytes(disparo_enemigo).decode("utf-8") == "WIN":
                 ganamos = False
+                end = True
                 break
             fila, columna = bytes_a_coordenadas(disparo_enemigo)
             respuesta_aliada = barco_local.recibir_disparo(fila, columna)
             server_socket.sendall(bytes(respuesta_aliada, encoding="utf-8"))
+        
+        if end:
+            break
+        sleep(0.1)
 
+    # Por si no lo ha recivido
     try:
+        sleep(0.5)
         if ganamos:
             server_socket.sendall(bytes("WIN", encoding="utf-8"))
     except:
@@ -99,15 +110,16 @@ def jugarComoServer(server_socket: socket):
     server_socket.close()
 
     if ganamos:
-        #barco_local.imprimir_tableros()
+        barco_local.imprimir_tableros()
         print(f"{barco_local.nombre} gano!!!")
     else:
-        #barco_local.imprimir_tableros()        
+        barco_local.imprimir_tableros()        
         print(f"{barco_local.nombre} perdio!!!")
 
 
 def jugarComoCliente(cliente_socket: socket):
-    barco_local  = Almirante()
+    barco_local  = Almirante("Cliente")
+    end = False
 
     while (True):
         # Esperamos el primer disparo porque somos el cliente
@@ -123,18 +135,21 @@ def jugarComoCliente(cliente_socket: socket):
         fila, columna = bytes_a_coordenadas(disparo_enemigo)
         respuesta_aliada = barco_local.recibir_disparo(fila, columna)
         cliente_socket.sendall(bytes(respuesta_aliada, encoding="utf-8"))
-        #barco_local.imprimir_tableros()
+        barco_local.imprimir_tableros()
 
         # Mientras que acierten nos siguen disparando 
         while (respuesta_aliada == "T" or respuesta_aliada == "H"):
             disparo_enemigo = cliente_socket.recv(16)
             if bytes(disparo_enemigo).decode("utf-8") == "WIN":
                 ganamos = False
+                end = True
                 break
             fila, columna = bytes_a_coordenadas(disparo_enemigo)
             respuesta_aliada = barco_local.recibir_disparo(fila, columna)
             cliente_socket.sendall(bytes(respuesta_aliada, encoding="utf-8"))
 
+        if end:
+            break
         # Disparamos porque el servidor fallo
         fila, columna = barco_local.elegir_coordenada_IA()
         filaLetra, columnaInt = coordenada_con_letra(fila, columna)
@@ -145,7 +160,7 @@ def jugarComoCliente(cliente_socket: socket):
             ganamos = False
             break
         barco_local.actualizar_tras_disparo(respuesta_del_enemigo, fila, columna)
-        #barco_local.imprimir_tableros()
+        barco_local.imprimir_tableros()
 
         # Mientras que acertemos seguimos disparando
         while (respuesta_del_enemigo == "T" or respuesta_del_enemigo == "H"):
@@ -156,8 +171,18 @@ def jugarComoCliente(cliente_socket: socket):
             # Esperamos respuesta
             respuesta_del_enemigo = bytes(cliente_socket.recv(16)).decode("utf-8")
             barco_local.actualizar_tras_disparo(respuesta_del_enemigo, fila, columna)
+            if bytes(disparo_enemigo).decode("utf-8") == "WIN":
+                ganamos = False
+                end = True
+                break
+        
+        if end:
+            break
+        sleep(0.1)
 
+    # Por si no lo ha recivido
     try:
+        sleep(0.5)
         if ganamos:
             cliente_socket.sendall(bytes("WIN", encoding="utf-8"))
     except:
@@ -166,12 +191,11 @@ def jugarComoCliente(cliente_socket: socket):
     cliente_socket.close()
     
     if ganamos:
-        #barco_local.imprimir_tableros()
+        barco_local.imprimir_tableros()
         print(f"{barco_local.nombre} gano!!!")
     else:
-        #barco_local.imprimir_tableros() 
+        barco_local.imprimir_tableros() 
         print(f"{barco_local.nombre} perdio!!!")
-
 
 
 def main():
