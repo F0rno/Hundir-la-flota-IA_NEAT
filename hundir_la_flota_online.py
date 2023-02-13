@@ -99,7 +99,7 @@ def jugarComoServer(server_socket: socket):
             break
         sleep(0.1)
 
-    # Por si no lo ha recivido
+    # Por si no lo ha recibido
     try:
         sleep(0.5)
         if ganamos:
@@ -188,7 +188,7 @@ def jugarComoCliente(cliente_socket: socket):
             break
         sleep(0.1)
 
-    # Por si no lo ha recivido
+    # Por si no lo ha recibido
     try:
         sleep(0.5)
         if ganamos:
