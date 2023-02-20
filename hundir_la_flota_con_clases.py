@@ -11,6 +11,10 @@ import random
 
 
 class Almirante:
+    """
+    Representa a un jugador de hundir la flota con sus tablero
+    y la capacidad de elegir donde disparar
+    """
     def __init__(self, nombre="Isoroku Yamamoto", entrenamiento=False, nombre_archivo_red_entrenada="red_entrenada"):
         self.nombre = "Almirante " + nombre
         self.nombre_archivo_red_entrenada = nombre_archivo_red_entrenada
@@ -23,10 +27,12 @@ class Almirante:
         self.inicializar_la_red()
 
     def inicializar_posicions_conocidas(self):
+        """Inicializamos las posibles coordenadas donde disparar"""
         self.posicions_conocidas = [(i, j) for i in range(10) for j in range(10)]
         random.shuffle(self.posicions_conocidas)
 
     def inicializar_la_red(self):
+        """Abrimos el archivo donde esta la red neuronal entrenada para disparar"""
         if not self.entrenamiento:
             self.config_path = path.join(getcwd(), 'config-feedforward.txt')
             self.config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, self.config_path)
@@ -38,6 +44,7 @@ class Almirante:
                 raise NameError("No se pudo importar el archivo con la red entrenada")      
 
     def algun_hundido(self, fila, columna, coordenadas_de_barcos):
+        """Comprobamos si nos han hundido un barco"""
         for coordenadas in coordenadas_de_barcos:
             if (fila, columna) in coordenadas:
                 coordenadas.remove((fila, columna))
@@ -46,17 +53,23 @@ class Almirante:
         return False
 
     def elegir_coordenada_aleatoria(self):
+        """
+        Elegimos una coordenada de manera aleatoria y la devolvemos
+            return fila, columna
+        """
         fila, columna = self.posicions_conocidas[-1]
         self.posicions_conocidas.pop()
         return fila, columna
 
     def recibir_disparo(self, fila, columna):
+        """Devolvemos si nos han dado en agua o en un barco"""
         if self.tablero_aliado[fila][columna] == "0":
             return "A"
         if self.tablero_aliado[fila][columna] != "0":
             return "T"
 
     def actualizar_tras_disparo(self, resultado_del_disparo, fila, columna):
+        """Actualizamos la matriz del tablero enemigo para saber como vamos"""
         if resultado_del_disparo == "A":
             self.tablero_enemigo[fila][columna] = "1"
             
@@ -67,6 +80,7 @@ class Almirante:
             self.tablero_enemigo[fila][columna] = "2"
 
     def imprimir_tableros(self):
+        """Imprimimos el tablero por terminal"""
         if platform == "win32":
             system("cls")
         elif platform == "linux2":
@@ -80,6 +94,7 @@ class Almirante:
         imprimir_tablero(self.tablero_aliado)
 
     def soy_ganador(self):
+        """Recorremos el tablero enemigo para saber si hemos tocado todos los barcos"""
         # Este bucle anidado recorre el tableo buscando
         # barcos "T" y si cuenta el maximo dice que ha gando
         win_counter = 0
@@ -92,16 +107,25 @@ class Almirante:
         return False
 
     def tablero_enemigo_para_IA(self):
+        """Convertimos el tablero a un formato que la red neuronal pueda procesar"""
         # Modifica el tablero de str a float
         # para la red neuronal
         return np.array(list(map(lambda x: list(map(float, x)), self.tablero_enemigo)), dtype=np.float32).reshape(100)
     
     def salida_de_red_a_indice(self,salida_de_la_red):
+        """
+        Convertimos una posición de un vector de 100 elementos
+        a unas coordenadas para una matriz de 10x10
+        """
         fila = salida_de_la_red // 10
         columna = salida_de_la_red % 10
         return fila, columna
 
     def elegir_coordenada_IA(self):
+        """
+        Pasamos el tablero enemigo por la red neuronal para
+        que haga la predicción del siguiente disparo
+        """
         tablero_enemigo_numpy = self.tablero_enemigo_para_IA()
         output = self.red_neuronal_de_disparo.activate(tablero_enemigo_numpy)
         fila, columna = self.salida_de_red_a_indice(np.argmax(output))
@@ -114,6 +138,7 @@ class Almirante:
 
 
 def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
+    """Ejecutamos una partida con 2 almirantes 1 con IA y otro Aelatroio y vemos el resultado"""
     yo = Almirante("IA")
     enemigo = Almirante("Ramdon")
     # Variable de juego
@@ -172,6 +197,7 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
 global ganadas_IA_contador, ganadas_RA_contador
 
 def pintarGrafica(ganadas_IA, ganadas_RA, numero_de_partidas):
+    """Pintamos la grafica con los datos de la partida"""
     x = [_ for _ in range(0,numero_de_partidas)]
     y1 = ganadas_IA
     y2 = ganadas_RA

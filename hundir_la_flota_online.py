@@ -32,6 +32,7 @@ def comprobar_si_ganamos_y_avisamos(socket: socket, barco_local: Almirante):
         
 
 def jugarComoServer(server_socket: socket):
+    """Ejecutamos el juego como server"""
     barco_local  = Almirante("Servidor")
     ganamos = False
     end = False
@@ -118,6 +119,7 @@ def jugarComoServer(server_socket: socket):
 
 
 def jugarComoCliente(cliente_socket: socket):
+    """Ejecutamos el juego como cliente"""
     barco_local  = Almirante("Cliente")
     end = False
 
@@ -207,6 +209,7 @@ def jugarComoCliente(cliente_socket: socket):
 
 
 def main():
+    """Iniciamos el juego que buscara automáticamente por DIFUSION UPD otro juego en su red local"""
     IP = socket.gethostbyname(socket.gethostname())
     maximo_de_intentos = 1
     numero_de_intentos = 1
