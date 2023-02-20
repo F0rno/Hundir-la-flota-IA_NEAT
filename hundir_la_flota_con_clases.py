@@ -10,8 +10,9 @@ import random
 
 
 class Almirante:
-    def __init__(self, nombre="Isoroku Yamamoto", entrenamiento=False):
+    def __init__(self, nombre="Isoroku Yamamoto", nombre_archivo_red_entrenada="red_entrenada", entrenamiento=False):
         self.nombre = "Almirante " + nombre
+        self.nombre_archivo_red_entrenada = nombre_archivo_red_entrenada
         self.entrenamiento = entrenamiento
         self.barcos = ((1, 4), (2, 3), (3, 2), (4, 1))
         self.tablero_aliado  = genera_tablero()
@@ -29,11 +30,11 @@ class Almirante:
             self.config_path = path.join(getcwd(), 'hundir_la_flota/config-feedforward.txt')
             self.config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, self.config_path)
             try:
-                with open("hundir_la_flota/red_mamadisima.pkl", "rb") as f:
+                with open(f"hundir_la_flota/{self.nombre_archivo_red_entrenada}.pkl", "rb") as f:
                     self.archivo_de_IA = pickle.load(f)
                     self.red_neuronal_de_disparo = neat.nn.FeedForwardNetwork.create(self.archivo_de_IA, self.config)
             except:
-                raise NameError("No se pudo importar el disparo IA")      
+                raise NameError("No se pudo importar el archivo con la red entrenada")      
 
     def algun_hundido(self, fila, columna, coordenadas_de_barcos):
         for coordenadas in coordenadas_de_barcos:
@@ -166,8 +167,8 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
 if __name__ == "__main__":
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 10
-    display  = True
+    n_juegos = 100
+    display  = False
     for _ in range(0, n_juegos):
         jugar(ganadas_RA, ganadas_IA, display)
     print(f"Ganadas IA        : {len(ganadas_IA)}")
