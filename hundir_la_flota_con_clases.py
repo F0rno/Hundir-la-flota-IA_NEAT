@@ -1,5 +1,6 @@
 from hundir_la_flota.tablero    import genera_tablero, imprimir_tablero, imprimir_tablero_IA
 from hundir_la_flota.barcos     import coloca_barcos
+import matplotlib.pyplot as plt
 from os         import system
 from sys        import platform, path
 from os         import path, getcwd
@@ -10,7 +11,7 @@ import random
 
 
 class Almirante:
-    def __init__(self, nombre="Isoroku Yamamoto", nombre_archivo_red_entrenada="red_entrenada", entrenamiento=False):
+    def __init__(self, nombre="Isoroku Yamamoto", entrenamiento=False, nombre_archivo_red_entrenada="red_entrenada"):
         self.nombre = "Almirante " + nombre
         self.nombre_archivo_red_entrenada = nombre_archivo_red_entrenada
         self.entrenamiento = entrenamiento
@@ -27,10 +28,10 @@ class Almirante:
 
     def inicializar_la_red(self):
         if not self.entrenamiento:
-            self.config_path = path.join(getcwd(), 'hundir_la_flota/config-feedforward.txt')
+            self.config_path = path.join(getcwd(), 'config-feedforward.txt')
             self.config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, self.config_path)
             try:
-                with open(f"hundir_la_flota/{self.nombre_archivo_red_entrenada}.pkl", "rb") as f:
+                with open(f"{self.nombre_archivo_red_entrenada}.pkl", "rb") as f:
                     self.archivo_de_IA = pickle.load(f)
                     self.red_neuronal_de_disparo = neat.nn.FeedForwardNetwork.create(self.archivo_de_IA, self.config)
             except:
@@ -53,8 +54,6 @@ class Almirante:
         if self.tablero_aliado[fila][columna] == "0":
             return "A"
         if self.tablero_aliado[fila][columna] != "0":
-            #if self.algun_hundido(fila, columna, self.coordenadas_de_barcos_aliados):
-                #return "T"
             return "T"
 
     def actualizar_tras_disparo(self, resultado_del_disparo, fila, columna):
@@ -66,7 +65,6 @@ class Almirante:
 
         if resultado_del_disparo == "H":
             self.tablero_enemigo[fila][columna] = "2"
-            #print("Hundido!")
 
     def imprimir_tableros(self):
         if platform == "win32":
@@ -120,6 +118,8 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
     enemigo = Almirante("Ramdon")
     # Variable de juego
     turno = 1
+    global ganadas_IA_contador
+    global ganadas_RA_contador
 
     while (True):
         # Elegir una coordenada para disparar
@@ -147,12 +147,16 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
                 if display:
                     yo.imprimir_tableros()
                     print(f"Gana {yo.nombre}")
-                ganadas_IA.append("1")
+                ganadas_IA_contador += 1
+                ganadas_IA.append(ganadas_IA_contador)
+                ganadas_RA.append(ganadas_RA_contador)
                 break
-
+        
         if turno == 2:
             if enemigo.soy_ganador():
-                ganadas_RA.append("1")
+                ganadas_RA_contador += 1
+                ganadas_RA.append(ganadas_RA_contador)
+                ganadas_IA.append(ganadas_IA_contador)
                 break
 
         # Cambio de turno    
@@ -164,14 +168,39 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
         # Velocidad del juego
         # sleep(0.1)
 
+
+global ganadas_IA_contador, ganadas_RA_contador
+
+def pintarGrafica(ganadas_IA, ganadas_RA, numero_de_partidas):
+    x = [_ for _ in range(0,numero_de_partidas)]
+    y1 = ganadas_IA
+    y2 = ganadas_RA
+
+    # Graficar dos líneas en la misma figura
+    plt.plot(x, y1, label="IA")
+    plt.plot(x, y2, label="RA")
+
+    # Titulo de la grafica
+    plt.title(f"Ganadas IA {round((ganadas_IA[-1]/n_juegos)*100)}% de {n_juegos} partidas")
+
+    # Agregar la leyenda
+    plt.legend()
+
+    # Agregar etiquetas a los ejes
+    plt.xlabel("Partidas")
+    plt.ylabel("Victorias")
+
+    plt.show()
+
 if __name__ == "__main__":
+    ganadas_IA_contador = 0
+    ganadas_RA_contador = 0
     ganadas_RA = []
     ganadas_IA = []
     n_juegos = 100
     display  = False
+
     for _ in range(0, n_juegos):
         jugar(ganadas_RA, ganadas_IA, display)
-    print(f"Ganadas IA        : {len(ganadas_IA)}")
-    print(f"Ganadas Aleatorio : {len(ganadas_RA)}")
-    print()
-    print(f"Ganadas IA        : {round((len(ganadas_IA)/n_juegos)*100)}% de {n_juegos} partidas")
+
+    pintarGrafica(ganadas_IA, ganadas_RA, n_juegos)
