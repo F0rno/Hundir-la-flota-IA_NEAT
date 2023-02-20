@@ -54,8 +54,7 @@ class Almirante:
 
     def elegir_coordenada_aleatoria(self):
         """
-        Elegimos una coordenada de manera aleatoria y la devolvemos
-            return fila, columna
+        Elegimos una coordenada de manera aleatoria y la devolvemos la fila y columna
         """
         fila, columna = self.posicions_conocidas[-1]
         self.posicions_conocidas.pop()
@@ -143,8 +142,7 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
     enemigo = Almirante("Ramdon")
     # Variable de juego
     turno = 1
-    global ganadas_IA_contador
-    global ganadas_RA_contador
+    global ganadas_IA_contador, ganadas_RA_contador
 
     while (True):
         # Elegir una coordenada para disparar
@@ -196,6 +194,7 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
 
 global ganadas_IA_contador, ganadas_RA_contador
 
+
 def pintarGrafica(ganadas_IA, ganadas_RA, numero_de_partidas):
     """Pintamos la grafica con los datos de la partida"""
     x = [_ for _ in range(0,numero_de_partidas)]
@@ -207,7 +206,7 @@ def pintarGrafica(ganadas_IA, ganadas_RA, numero_de_partidas):
     plt.plot(x, y2, label="RA")
 
     # Titulo de la grafica
-    plt.title(f"Ganadas IA {round((ganadas_IA[-1]/n_juegos)*100)}% de {n_juegos} partidas")
+    plt.title(f"Ganadas IA {round((ganadas_IA[-1]/numero_de_partidas)*100)}% de {numero_de_partidas} partidas")
 
     # Agregar la leyenda
     plt.legend()
@@ -218,7 +217,10 @@ def pintarGrafica(ganadas_IA, ganadas_RA, numero_de_partidas):
 
     plt.show()
 
-if __name__ == "__main__":
+
+def main():
+    """Ejecutamos n juegos y guardamos los resultados para graficarlos"""
+    global ganadas_IA_contador, ganadas_RA_contador
     ganadas_IA_contador = 0
     ganadas_RA_contador = 0
     ganadas_RA = []
@@ -230,3 +232,7 @@ if __name__ == "__main__":
         jugar(ganadas_RA, ganadas_IA, display)
 
     pintarGrafica(ganadas_IA, ganadas_RA, n_juegos)
+
+
+if __name__ == "__main__":
+    main()
