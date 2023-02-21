@@ -43,20 +43,23 @@ Habiendo entrenado a 50 individuos en 200 generaciones estos son los resultados:
 
 ![This is an image](resultado_de_partidas/10_000-partidas.png)
 
-Con las graficas se puede ver de una manera visual la efectividad de nuestra red, que aunque en pequeñas muestras es practicamente aleatoria a medida que se aumenta el número de muestras se estaviliza. Pero solo con una mejora del 6% frente al juego aleatorio.
+Con las graficas se pueden ver los resultados que tiene nuestra red en las partidas contra el jugador aleatorio. La efectividad en pequeñas muestras es practicamente aleatoria pero se estaviliza a medida que se aumenta el número de muestras. Eso si solo con una mejora de entorno al 6% frente al juego aleatorio.
 
-Aunque cabe destacar que mientras hacia las graficas me di cuenta de que el archivo que ejecuta las pruebas ``hundir_la_flota_con_clases.py`` se salta una regla importante del juego original y es que: cuando haciertas en el juego original puedes seguir disparando hasta que falles, cosa que aqui no se contempla y no importa, el turno siempre cambia.
+Esto ocurre ya que en este juego en concreto el factor suerte/aleatorio esta muy presente, haciendo que  desaprovechemos la capacidad de encontrar patrones que superen al rival. Pero sigue consiguiendo que yo no tenga que trabajar con ``los malvados indices de un arreglo``, asi que para mi esto es un 10 en toda regla😁.
 
-Esto seguramente haga que las estadisticas de la red pueda mejorar frente al rival aleatorio, pero como el punto de este repositorio no es conseguir la red más eficiente si no un "hundir la flota" que se juegue automatico haciendo uso de redes neuronales y asi hacer que yo no tenga que trabajar con malvados indices😨. Pues sera una cosa que tenga en cuenta para mis proximos proyectos y asi ver la mejora😁.
+## Requisitos y dependencias
 
-Requisitos del sistema: Si el proyecto requiere ciertos requisitos del sistema para funcionar correctamente, como una versión específica del lenguaje de programación o un sistema operativo en particular, asegúrese de incluir esa información.
+Este proyecto ha sido realizado usando Python 3.10, aunque puede ser utilizado por cualquier versión que pueda soportar las siguientes librerias:
 
-Instalación: Proporcione instrucciones detalladas para instalar y configurar el proyecto en un ambiente de desarrollo. Es recomendable incluir comandos de terminal necesarios para instalar cualquier dependencia y cualquier otra configuración requerida.
+neat-python
+pickleshare
+numpy
+matplotlib
 
-Uso: Proporcione instrucciones claras sobre cómo utilizar el proyecto. Si el proyecto tiene una interfaz de usuario, proporcione capturas de pantalla y / o vídeos de demostración.
+Estas pueden ser instaladas automaticamente utilizando el comando ``pip3 install -r .\requirements.txt``.
 
-Contribución: Si está permitido, indique cómo la comunidad puede contribuir al proyecto. Incluya información sobre cómo presentar solicitudes de cambio y cómo colaborar en el desarrollo del proyecto.
+## Uso
 
-Licencia: Proporcione información sobre la licencia del proyecto y cómo se puede utilizar el código.
+## Licencia
 
-Enlaces: Proporcione enlaces a documentación adicional, recursos útiles o cualquier otro enlace relevante relacionado con el proyecto.
+## Enlaces

@@ -1,13 +1,12 @@
 from hundir_la_flota.tablero    import genera_tablero, imprimir_tablero, imprimir_tablero_IA
 from hundir_la_flota.barcos     import coloca_barcos
-import matplotlib.pyplot as plt
-from os         import system
+from os         import system, path, getcwd
 from sys        import platform, path
-from os         import path, getcwd
-import neat
-import pickle
+import matplotlib.pyplot as plt
 import numpy as np
+import pickle
 import random
+import neat
 
 
 class Almirante:
@@ -16,6 +15,10 @@ class Almirante:
     y la capacidad de elegir donde disparar
     """
     def __init__(self, nombre="Isoroku Yamamoto", entrenamiento=False, nombre_archivo_red_entrenada="red_entrenada"):
+        """
+        La clase de normal se instancia para jugar haciendo que se abra el archivo entrenado predeterminado,
+        pero si se la quire usar para entrenar no cargara el archivo inhabilitando el disparo IA
+        """
         self.nombre = "Almirante " + nombre
         self.nombre_archivo_red_entrenada = nombre_archivo_red_entrenada
         self.entrenamiento = entrenamiento
@@ -233,7 +236,7 @@ def main():
     ganadas_RA_contador = 0
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 10
+    n_juegos = 10000
     display  = False
 
     for _ in range(0, n_juegos):
