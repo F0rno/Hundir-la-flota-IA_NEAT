@@ -145,24 +145,6 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
     global ganadas_IA_contador, ganadas_RA_contador
 
     while (True):
-        # Elegir una coordenada para disparar
-        if turno == 1:
-            fila, columna = yo.elegir_coordenada_IA()
-            resultado_del_disparo = enemigo.recibir_disparo(fila, columna)
-
-        if turno == 2:
-            fila, columna = enemigo.elegir_coordenada_aleatoria()
-            resultado_del_disparo = yo.recibir_disparo(fila, columna)
-    
-        # Actualizar mapa con (Tocado, Hundido y Agua)
-        if turno == 1:
-            yo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
-        if turno == 2:
-            enemigo.actualizar_tras_disparo(resultado_del_disparo, fila, columna) 
-
-        if display:
-            # Impresión de los tableros
-            yo.imprimir_tableros()      
 
         # Combrobar si hay ganador, 20 gana
         if turno == 1:
@@ -181,6 +163,32 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
                 ganadas_RA.append(ganadas_RA_contador)
                 ganadas_IA.append(ganadas_IA_contador)
                 break
+
+        # Elegir una coordenada para disparar
+        if turno == 1:
+            fila, columna = yo.elegir_coordenada_IA()
+            resultado_del_disparo = enemigo.recibir_disparo(fila, columna)
+
+        if turno == 2:
+            fila, columna = enemigo.elegir_coordenada_aleatoria()
+            resultado_del_disparo = yo.recibir_disparo(fila, columna)
+    
+        # Actualizar mapa con (Tocado, Hundido y Agua)
+        if turno == 1:
+            yo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
+            # Si tocamos un barco seguimos disparando
+            if resultado_del_disparo == "T":
+                continue
+
+        if turno == 2:
+            enemigo.actualizar_tras_disparo(resultado_del_disparo, fila, columna)
+            # Si tocamos un barco seguimos disparando
+            if resultado_del_disparo == "T":
+                continue
+
+        if display:
+            # Impresión de los tableros
+            yo.imprimir_tableros()      
 
         # Cambio de turno    
         if turno == 1:
@@ -225,7 +233,7 @@ def main():
     ganadas_RA_contador = 0
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 100
+    n_juegos = 10
     display  = False
 
     for _ in range(0, n_juegos):
