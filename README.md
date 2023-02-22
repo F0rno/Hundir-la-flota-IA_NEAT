@@ -37,11 +37,10 @@ Y así lograr que encuentre la manera más óptima para jugar a través de la ex
 
 ## Resultados
 
-Habiendo entrenado a 50 individuos en 200 **generaciones,** estos son los resultados:
+Habiendo entrenado a 50 individuos en 200 generaciones, estos son los resultados:
 
-##### *IA: La red entrenada*
-
-##### *RA: Disparo aleatorio*
+* *IA: La red entrenada*
+* *RA: Disparo aleatorio*
 
 ![This is an image](resultado_de_partidas/10_partidas/0.png)
 
@@ -80,10 +79,10 @@ Estas pueden ser instaladas automáticamente utilizando el comando ``pip3 instal
 
 ## Referencias y agradecimientos
 
-Conocimiento general de IA [Dot CSV](https://www.youtube.com/@DotCSV)
+Muchísimas gracias a todos los creadores de contenido que publicaron sus conocimientos para que cualquiera pudiera aprenderlos e implementarlos.
 
-Algoritmo usado en el proyecto [NEAT](https://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf)
+* Conocimiento general de IA [Dot CSV](https://www.youtube.com/@DotCSV)
+* Algoritmo usado en el proyecto [NEAT](https://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf)
 
-Implementación del algoritmo NEAT [Tech With Tim](https://www.youtube.com/watch?v=wQWWzBHUJWM&list=PLzMcBGfZo4-lwGZWXz5Qgta_YNX3_vLS2&index=6)
-
-Comprensión de las matemáticas [3Blue1Brown](https://www.youtube.com/@3blue1brown), [StatQuest with Josh Starmer](https://www.youtube.com/@statquest)
+* Implementación del algoritmo NEAT [Tech With Tim](https://www.youtube.com/watch?v=wQWWzBHUJWM&list=PLzMcBGfZo4-lwGZWXz5Qgta_YNX3_vLS2&index=6)
+* Comprensión de las matemáticas [3Blue1Brown](https://www.youtube.com/@3blue1brown), [StatQuest with Josh Starmer](https://www.youtube.com/@statquest)
