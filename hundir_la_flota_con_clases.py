@@ -1,3 +1,7 @@
+"""
+Este modulo ejecuta n partidas el juego de hundir la flota 
+y muestra los resultados por una grafica
+"""
 from hundir_la_flota.tablero    import genera_tablero, imprimir_tablero, imprimir_tablero_IA
 from hundir_la_flota.barcos     import coloca_barcos
 from os         import system, path, getcwd
@@ -236,7 +240,7 @@ def main():
     ganadas_RA_contador = 0
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 10000
+    n_juegos = 100
     display  = False
 
     for _ in range(0, n_juegos):

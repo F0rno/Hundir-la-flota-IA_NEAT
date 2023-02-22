@@ -1,3 +1,7 @@
+"""
+Este modulo ejecuta el juego de hundir la flota atraves de la red local
+para permitir que dos equipos jueguen entre si
+"""
 from hundir_la_flota_con_clases import Almirante
 from net.lanzar_escucha_ip import *
 from net.protocolo import *
@@ -209,7 +213,7 @@ def jugarComoCliente(cliente_socket: socket):
 
 
 def main():
-    """Iniciamos el juego que buscara automáticamente por DIFUSION UPD otro juego en su red local"""
+    """Iniciamos el juego que buscara automáticamente por DIFUSION UPD otro juego en tú red local"""
     IP = socket.gethostbyname(socket.gethostname())
     maximo_de_intentos = 1
     numero_de_intentos = 1

@@ -60,6 +60,10 @@ Estas pueden ser instaladas automaticamente utilizando el comando ``pip3 install
 
 ## Uso
 
+Para probar el juego solo hay que ejecutar el archivo ``hundir_la_flota_con_clases.py``. Cuando termine las n partidas (default 100) y mostrara una grafica con las victorias.
+
+Para jugarlo online en una misma red privada, solo hay que ejecutar ``hundir_la_flota_online.py`` en 2 equipos diferentes y mediante difusion se encontraran y empezaran a jugar.
+
 ## Licencia
 
 ## Enlaces
