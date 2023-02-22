@@ -1,39 +1,55 @@
-# Hundir la flota (IA)
+# Hundir la flota (IA🤖)
 
-Este proyecto se basa en la creación de un juego de "Hundir la flota" que se juega de manera automatica con la característica de que el disparo (las coordenadas donde el jugador cree que está el barco enemigo) sean predichas por una red neuronal.
+Este proyecto se centra en la creación de un juego de "Hundir la flota" que se juega de manera automática con la característica de que el disparo (las coordenadas donde el jugador cree que está el barco enemigo) sean predichas por una red neuronal.
 
 ## Problema
 
+---
+
 Obviando la creación del juego base, tenemos el siguiente problema:
-Necesitamos crear una red neuronal que decida donde deberíamos disparar en base a una entrada (input). La capas ocultas que tendra la red y la forma de la capa de salida que nos diga donde quiere disparar la red (el output de la red).
+Necesitamos crear una red neuronal que decida donde deberíamos disparar en base a una entrada. De hay sacamos que necesitamos encontrar:
+
+1. El input para nuestra red
+2. Las capas ocultas que tendrá la red
+3. La forma de la capa de salida (output)
+
+De esta ultima sera de donde saquemos las coordenadas predichas por la red. Teniendo en cuenta que los jugadores tendran la siguiente información:
+
+* Tablero aliado(TA): El tablero con sus barcos
+* Tablero a desvelar(TD): El tablero con las posiciones conocidas del jugador contrario
 
 ## Solución planteada
+
+---
 
 Para afrontar el problema la estructura de la red que he pensado es esta:
 
 ![This is an image](resources/red_img.png)
 
-Con esta estructura lo que hacemos es dar como input a la red el tablero enemigo, que guarda la información que ya sabemos sobre las posiciones de barcos enemigos y como output tenemos otro "tablero" conformado por otras 100 neuronas de las cuales elegiremos la que más se active como coordenada deseada.
+Con esta estructura lo que hacemos es dar como input a la red el tablero TD y eso nos genererara como output otro "tablero" conformado por otras 100 neuronas de las cuales elegiremos la que más se active como coordenada deseada.
 
-Aclarar que aunque en la ilustración las capas de entra/salida tienen la forma del tablero 10x10 en realidad tanto la capa de entrada como la de salida son 100 neuronas en fila, solo las represento así para que sea más visual.
+Aclarar que aunque en la ilustración las capas de entra/salida tienen la forma del tablero 10x10 en realidad tanto la capa de entrada como la de salida son 100 neuronas en fila, solo las represento así para que sea más visual y que no he representado la forma de las capas ocultas en la ilustración ya que para la generación de la red he usado el algoritmo [NEAT](https://neat-python.readthedocs.io/en/latest/neat_overview.html), lo que hace que no tenga mucho sentido dibujar la estructura oculta si de un entrenamiento a otro las capas ocultas pueden cambiar.
 
-Notar que no he representado la forma de las capas ocultas en la ilustración ya que para la generación de la red he usado el algoritmo [NEAT](https://neat-python.readthedocs.io/en/latest/neat_overview.html), lo que hace que no tenga mucho sentido dibujar la estructura oculta si de un entrenamiento a otro las capas ocultas pueden cambiar.
+## Prueba de la solución
 
-## Prueba de la solucíon
+---
 
-Ahora que tenemos la red para probar es hora de entrenarla, no lo he mencionado antes pero esta red sera entrenada mediante entrenamiento de refuerzo, lo que haremos sera ponerla a jugar para que consiga recompensas cuando hacierte a un barco o castigos cuando dispare al agua/repita disparo a una posición ya usada. Y asi lograr que encuentre la manera más optima para jugar, aunque ya os adelanto que en un juego tan limitado en acciones como este, junto a su gran componente de aleatoriedad no se le sacara todo el partido a nuestra red.
+Ahora que tenemos la red para probar es hora de entrenarla, no lo he mencionado antes pero esta red sera entrenada mediante entrenamiento reforzado([Reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning)), lo que haremos sera ponerla a jugar para que consiga tanto recompensas como castigos:
 
-La podremos entrenar mediante el archivo ``entrenador.ipynb`` que es un jupyter Notebook.
+* Recompensa cuando acierte a un barco
+* Castigo cuando dispare al agua/repita una posición ya usada.
 
-Adicionalmente podemos cambiar una gran cantidad de los parametros de entrenamiento de nuestra red tales como: la función de activacion, el numero de individuos de cada población o el número de capas ocultas, junto a otros muchas más cosas en el archivo ``config-feedforward.txt``
+Y así lograr que encuentre la manera más óptima para jugar a traves de la experiencia del entrenamiento, aunque ya os adelanto que en un juego tan poco dinamico y limitado en acciones como este, junto a su gran componente de aleatoriedad no se le sacara todo el partido a nuestra red.
 
 ## Resultados
 
+---
+
 Habiendo entrenado a 50 individuos en 200 generaciones estos son los resultados:
 
-###### IA: La red entrenada
+##### *IA: La red entrenada*
 
-###### RA: Disparo aleatorio
+##### *RA: Disparo aleatorio*
 
 ![This is an image](resultado_de_partidas/10_partidas/0.png)
 
@@ -43,27 +59,45 @@ Habiendo entrenado a 50 individuos en 200 generaciones estos son los resultados:
 
 ![This is an image](resultado_de_partidas/10_000-partidas.png)
 
-Con las graficas se pueden ver los resultados que tiene nuestra red en las partidas contra el jugador aleatorio. La efectividad en pequeñas muestras es practicamente aleatoria pero se estaviliza a medida que se aumenta el número de muestras. Eso si solo con una mejora de entorno al 6% frente al juego aleatorio.
+Con las gráficas se pueden ver los resultados que tiene nuestra red en las partidas contra el jugador aleatorio. La efectividad en pequeñas muestras es practicamente aleatoria pero se estabiliza a medida que se aumenta el número de muestras. Eso si solo con una mejora de entorno al 6% frente al juego aleatorio.
 
-Esto ocurre ya que en este juego en concreto el factor suerte/aleatorio esta muy presente, haciendo que  desaprovechemos la capacidad de encontrar patrones que superen al rival. Pero sigue consiguiendo que yo no tenga que trabajar con ``los malvados indices de un arreglo``, asi que para mi esto es un 10 en toda regla😁.
+Esto ocurre ya que en este juego en concreto el factor suerte/aleatorio esta muy presente, haciendo que  desaprovechemos la capacidad de encontrar patrones para superar al rival. Pero consigue que yo no tenga que trabajar con ``los malvados índices de un arreglo``, así que para mi esto es un 10 en toda regla😁.
 
 ## Requisitos y dependencias
 
-Este proyecto ha sido realizado usando Python 3.10, aunque puede ser utilizado por cualquier versión que pueda soportar las siguientes librerias:
+---
 
-neat-python
-pickleshare
-numpy
-matplotlib
+Este proyecto ha sido realizado usando Python 3.10, aunque puede ser utilizado por cualquier versión que pueda soportar las siguientes librerías:
 
-Estas pueden ser instaladas automaticamente utilizando el comando ``pip3 install -r .\requirements.txt``.
+* neat-python
+* pickleshare
+* numpy
+* matplotlib
+
+Estas pueden ser instaladas automáticamente utilizando el comando ``pip3 install -r .\requirements.txt``.
 
 ## Uso
 
-Para probar el juego solo hay que ejecutar el archivo ``hundir_la_flota_con_clases.py``. Cuando termine las n partidas (default 100) y mostrara una grafica con las victorias.
+---
 
-Para jugarlo online en una misma red privada, solo hay que ejecutar ``hundir_la_flota_online.py`` en 2 equipos diferentes y mediante difusion se encontraran y empezaran a jugar.
+### Juego
 
-## Licencia
+* Para probar el juego solo hay que ejecutar el archivo ``hundir_la_flota_con_clases.py``. Cuando termine las n partidas (default 100) mostrara una gráfica con las victorias.
+* Para jugarlo online en una misma red local, solo hay que ejecutar ``hundir_la_flota_online.py`` en 2 equipos diferentes y mediante difusión se encontraran para empezaran a jugar.
 
-## Enlaces
+### Entrenamiento
+
+* Podremos entrenar la red mediante el archivo ``entrenador.ipynb`` que es un jupyter Notebook. Este archivo carga la configuración de entrenamiento del ``config-feedforward.txt`` y pone a jugar a los diferentes individuos(redes neuronales) para que desarrollen las mejores tacticas que encuentren. Una vez finalizado el entrenamiento se generara un archivo [.plk](https://docs.python.org/3/library/pickle.html) con la red que mejor resultados ha dado (el nombre del arvhivo predeterminado es ``red_entrenada.plk``).
+* **Adicionalmente podemos cambiar los parámetros de entrenamiento** de nuestra red tales como: la función de activación([ReLu](https://en.wikipedia.org/wiki/Activation_function)), el numero de individuos de cada población o el número de capas ocultas, junto a otras muchas más cosas en el archivo ``config-feedforward.txt`` DOC del [config](https://neat-python.readthedocs.io/en/latest/config_file.html#neat-sectionhttps:/).
+
+## Referencias y agradecimientos
+
+---
+
+Conocimiento general de IA [Dot CSV](https://www.youtube.com/@DotCSV)
+
+Algoritmo usado en el proyecto [NEAT](https://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf)
+
+Implementación del algoritmo NEAT [Tech With Tim](https://www.youtube.com/watch?v=wQWWzBHUJWM&list=PLzMcBGfZo4-lwGZWXz5Qgta_YNX3_vLS2&index=6)
+
+Comprensión de las matematicas [3Blue1Brown](https://www.youtube.com/@3blue1brown), [StatQuest with Josh Starmer](https://www.youtube.com/@statquest)
