@@ -1,6 +1,6 @@
 # Hundir la flota (IA🤖)
 
-Este proyecto se centra en la creación de un juego de "Hundir la flota" que se juega de manera automática con la característica de que el disparo (las coordenadas donde el jugador cree que está el barco enemigo) sean predichas por una red neuronal.
+Este proyecto se enfoca en la creación de un [Hundir la flota](https://es.wikipedia.org/wiki/Batalla_naval_(juego)), que sea capaz de jugar de manera automática con la característica de que el disparo (las coordenadas donde el jugador cree que está el barco enemigo) sean predichas por una red neuronal.
 
 ## Problema
 
