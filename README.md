@@ -4,8 +4,6 @@ Este proyecto se centra en la creación de un juego de "Hundir la flota" que se 
 
 ## Problema
 
----
-
 Obviando la creación del juego base, tenemos el siguiente problema:
 Necesitamos crear una red neuronal que decida donde deberíamos disparar con base a una entrada. De ahí sacamos que necesitamos encontrar:
 
@@ -20,8 +18,6 @@ De esta última será de donde saquemos las coordenadas predichas por la red. Te
 
 ## Solución planteada
 
----
-
 Para afrontar el problema, la estructura de la red que he pensado es esta:
 
 ![This is an image](resources/red_img.png)
@@ -32,8 +28,6 @@ Aclarar que aunque en la ilustración las capas de entra/salida tienen la forma 
 
 ## Prueba de la solución
 
----
-
 Ahora que tenemos la red para probar es hora de entrenarla, no lo he mencionado antes, pero esta red será entrenada mediante entrenamiento reforzado([Reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning)), lo que haremos será ponerla a jugar para que consiga tanto recompensas como castigos:
 
 * Recompensa cuando acierte a un barco
@@ -42,8 +36,6 @@ Ahora que tenemos la red para probar es hora de entrenarla, no lo he mencionado 
 Y así lograr que encuentre la manera más óptima para jugar a través de la experiencia del entrenamiento, aunque ya os adelanto que en un juego tan poco dinámico y limitado en acciones como este, junto a su gran componente de aleatoriedad, no se le sacara todo el partido a nuestra red.
 
 ## Resultados
-
----
 
 Habiendo entrenado a 50 individuos en 200 **generaciones,** estos son los resultados:
 
@@ -65,8 +57,6 @@ Esto ocurre ya que en este juego en concreto el factor suerte/aleatorio está mu
 
 ## Requisitos y dependencias
 
----
-
 Este proyecto ha sido realizado usando Python 3.10, aunque puede ser utilizado por cualquier versión que pueda soportar las siguientes librerías:
 
 * neat-python
@@ -77,8 +67,6 @@ Este proyecto ha sido realizado usando Python 3.10, aunque puede ser utilizado p
 Estas pueden ser instaladas automáticamente utilizando el comando ``pip3 install -r .\requirements.txt``.
 
 ## Uso
-
----
 
 ### Juego
 
@@ -91,8 +79,6 @@ Estas pueden ser instaladas automáticamente utilizando el comando ``pip3 instal
 * **Adicionalmente, podemos cambiar los parámetros de entrenamiento** de nuestra red tales como: la función de activación([ReLu](https://en.wikipedia.org/wiki/Activation_function)), el número de individuos de cada población o el número de capas ocultas, junto a otras muchas más cosas en el archivo ``config-feedforward.txt`` DOC del [config](https://neat-python.readthedocs.io/en/latest/config_file.html#neat-sectionhttps:/).
 
 ## Referencias y agradecimientos
-
----
 
 Conocimiento general de IA [Dot CSV](https://www.youtube.com/@DotCSV)
 
