@@ -37,7 +37,7 @@ class Almirante:
     def inicializar_la_red(self):
         """Abrimos el archivo donde esta la red neuronal entrenada para disparar"""
         if not self.entrenamiento:
-            self.config_path = path.join(getcwd(), 'config-feedforward.txt')
+            self.config_path = 'config-feedforward.txt'
             self.config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, self.config_path)
             try:
                 with open(f"{self.nombre_archivo_red_entrenada}.pkl", "rb") as f:
