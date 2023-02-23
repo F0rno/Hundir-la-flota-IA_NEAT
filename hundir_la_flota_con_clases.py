@@ -7,6 +7,7 @@ from hundir_la_flota.barcos     import coloca_barcos
 from os         import system, path, getcwd
 from sys        import platform, path
 import matplotlib.pyplot as plt
+from time import sleep
 import numpy as np
 import pickle
 import random
@@ -193,9 +194,13 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
             if resultado_del_disparo == "T":
                 continue
 
-        if display:
+        if display and turno == 1:
             # Impresión de los tableros
-            yo.imprimir_tableros()      
+            yo.imprimir_tableros()     
+
+        if display and turno == 2:
+            # Impresión de los tableros
+            enemigo.imprimir_tableros()  
 
         # Cambio de turno    
         if turno == 1:
@@ -204,7 +209,7 @@ def jugar(ganadas_RA:list, ganadas_IA:list, display=False):
             turno = 1
 
         # Velocidad del juego
-        # sleep(0.1)
+        sleep(0.5)
 
 
 global ganadas_IA_contador, ganadas_RA_contador
@@ -240,13 +245,18 @@ def main():
     ganadas_RA_contador = 0
     ganadas_RA = []
     ganadas_IA = []
-    n_juegos = 100
-    display  = False
+    # Número de partidas
+    n_juegos = 1
+    # Mostrar los tableros al jugar
+    display  = True
+    # Mostrar la gráfica al final
+    displayGrafica = False
 
     for _ in range(0, n_juegos):
         jugar(ganadas_RA, ganadas_IA, display)
 
-    pintarGrafica(ganadas_IA, ganadas_RA, n_juegos)
+    if displayGrafica:
+        pintarGrafica(ganadas_IA, ganadas_RA, n_juegos)
 
 
 if __name__ == "__main__":
